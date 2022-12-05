@@ -1,33 +1,21 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"net/http"
-
-	"example/ferros/server"
+	"io"
+	"log"
+	"os"
 )
 
 func main() {
-	http.HandleFunc("/hello", server.Hello)
-	http.HandleFunc("/headers", server.Headers)
+	r, w := io.Pipe()
 
-	// http.ListenAndServe(":8090", nil)
+	go func() {
+		fmt.Fprint(w, "some io.Reader stream to be read\n")
+		w.Close()
+	}()
 
-	resp, err := http.Get("https://gobyexample.com")
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
-
-	fmt.Println("Response status:", resp.Status)
-
-	scanner := bufio.NewScanner(resp.Body)
-	for i := 0; scanner.Scan() && i < 5; i++ {
-		fmt.Println(scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
-		panic(err)
+	if _, err := io.Copy(os.Stdout, r); err != nil {
+		log.Fatal(err)
 	}
 }

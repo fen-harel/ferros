@@ -1,19 +1,22 @@
-package server
+package main
 
 import (
 	"fmt"
-	"net/http"
+	"os"
 )
 
-func Hello(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "hello\n")
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
 }
 
-func Headers(w http.ResponseWriter, req *http.Request) {
+func main() {
 
-	for name, headers := range req.Header {
-		for _, h := range headers {
-			fmt.Fprintf(w, "%v: %v\n", name, h)
-		}
-	}
+	dat, err := os.ReadFile("../README.md")
+	check(err)
+	fmt.Print(string(dat))
+
+	// f, err := os.Open("../README.md")
+	// check(err)
 }
