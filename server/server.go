@@ -1,22 +1,33 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"os"
+
+	"example/ferros/utils"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
+const prompt = ">>"
+
+func start(in io.Reader, out io.Writer) {
+	scanner := bufio.NewScanner(in)
+
+	for {
+		fmt.Printf(prompt)
+		scanned := scanner.Scan()
+		if !scanned {
+			return
+		}
+
+		dir := scanner.Text()
+		reader.Reader(dir)
+
+		// fmt.Println(line)
 	}
 }
 
 func main() {
-
-	dat, err := os.ReadFile("../README.md")
-	check(err)
-	fmt.Print(string(dat))
-
-	// f, err := os.Open("../README.md")
-	// check(err)
+	start(os.Stdin, os.Stdout)
 }
