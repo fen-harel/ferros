@@ -1,4 +1,4 @@
-package reader
+package utilities
 
 import (
 	"fmt"
@@ -11,6 +11,9 @@ func Check(e error) {
 	}
 }
 
+// Reads byte from scanner
+// text input and prints
+// back in text form
 func Reader(dir string) {
 	dat, err := os.ReadFile(dir)
 	Check(err)

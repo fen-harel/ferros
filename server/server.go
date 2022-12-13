@@ -1,17 +1,16 @@
-package main
+package server
 
 import (
 	"bufio"
 	"fmt"
 	"io"
-	"os"
 
 	"example/ferros/utils"
 )
 
-const prompt = ">>"
+const prompt = ">> "
 
-func start(in io.Reader, out io.Writer) {
+func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 
 	for {
@@ -22,12 +21,9 @@ func start(in io.Reader, out io.Writer) {
 		}
 
 		dir := scanner.Text()
-		reader.Reader(dir)
+        utilities.Reader(dir)
 
-		// fmt.Println(line)
+		fmt.Println(dir)
 	}
 }
 
-func main() {
-	start(os.Stdin, os.Stdout)
-}
